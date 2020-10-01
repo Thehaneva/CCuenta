@@ -12,7 +12,7 @@ package es.iesalb.dam2.di.jasc.tema1.tema1;
 public class NewMain {
 
     /**
-     * @param args the command line arguments
+     * @param 
      */
     public static void main(String[] args) {
         // TODO code application logic here
