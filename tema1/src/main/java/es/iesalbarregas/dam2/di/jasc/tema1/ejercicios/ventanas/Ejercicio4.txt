@@ -1,0 +1,2 @@
+ ¿Para qué sirve dicha propiedad?
+Para cambiar el cursor de forma. Le puedes asignar otra forma al cursor que no sea la flecha 

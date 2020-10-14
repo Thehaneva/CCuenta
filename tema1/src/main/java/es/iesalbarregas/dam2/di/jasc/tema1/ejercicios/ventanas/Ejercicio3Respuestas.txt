@@ -1,0 +1,4 @@
+¿Qué indican estas propiedades?
+Estas propiedades indican el maxiomo y el minimo de anchura y altura que puede tener la ventana
+¿Qué valor tiene maximumSize por defecto y cuál es su significado?
+[2147483647, 2147483647] ese es el valor por defecto que tiene el maximunSize, es un maximo que no se va a ver sobrepasado en ningun caso

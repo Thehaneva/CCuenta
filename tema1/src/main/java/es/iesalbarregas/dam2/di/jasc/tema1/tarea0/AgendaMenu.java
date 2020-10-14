@@ -18,7 +18,14 @@ public class AgendaMenu {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int opcion = 0;
+       
+        
+        
+    }
+}
+ 
+/*
+ int opcion = 0;
         
         Agenda miListaDeContactos = new Agenda();
         boolean salir = false;
@@ -49,7 +56,4 @@ public class AgendaMenu {
                 }
         }
     }
-        
-        
-    }
-    
+*/
