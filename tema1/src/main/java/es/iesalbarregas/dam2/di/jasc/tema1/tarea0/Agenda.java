@@ -153,7 +153,7 @@ public class Agenda {
         Scanner sc = new Scanner(System.in);
         Matcher mat;
         while(comprobar==false){
-            System.out.print("Introduce tu nombre :");
+            System.out.println("Introduce tu nombre :");
             nombre=sc.next();
             mat=patron.matcher(nombre);
                 if(mat.matches()){
@@ -173,7 +173,7 @@ public class Agenda {
         Scanner sc = new Scanner(System.in);
         Matcher mat;
         while(comprobar==false){
-            System.out.print("Introduce tus apellidos :");
+            System.out.println("Introduce tus apellidos :");
             apellido=sc.next();
             mat=patron.matcher(apellido);
                 if(mat.matches()){
@@ -193,7 +193,7 @@ public class Agenda {
         Scanner sc = new Scanner(System.in);
         Matcher mat;
         while(comprobar==false){
-            System.out.print("Introduce el Telefono:");
+            System.out.println("Introduce el Telefono:");
             telefono=sc.next();
             mat=patron.matcher(telefono);
                 if(mat.matches()){
