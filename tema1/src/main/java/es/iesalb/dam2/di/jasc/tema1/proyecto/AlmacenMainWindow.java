@@ -273,7 +273,7 @@ public class AlmacenMainWindow extends javax.swing.JFrame {
     private void jButtonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarActionPerformed
         // TODO add your handling code here:
     AlmacenResumenWindow vista = new AlmacenResumenWindow(this, true);
-        vista.setVisible(true);
+    vista.setVisible(true);
     }//GEN-LAST:event_jButtonMostrarActionPerformed
 
 

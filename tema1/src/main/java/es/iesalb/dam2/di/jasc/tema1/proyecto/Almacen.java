@@ -82,36 +82,41 @@ public class Almacen {
             } else throw new Exception("El Producto ya esta creado");
            return añadir;
     }
+
    public String obtenerImportes(){
-        double cantidad1=0.0;
-        double cantidad2=0.0;
-        double cantidad3=0.0;
-         
-        double precio1=0.0;
-        double precio2=0.0;
-        double precio3=0.0;
         
-        String total1 = "";
-        String total2 = "";
-        String total3 = "";
+        int unidades = 0;
+        int kilos = 0;
+        int litros = 0;
+        double importeU = 0;
+        double importeK = 0;
+        double importeL = 0;
         
-         for(int i = 0; i <= lista.size() - 1; i++){
-            if(lista.get(i).getMedida().equalsIgnoreCase("Unidad")){
-                cantidad1=cantidad1+lista.get(i).getCantidad();
-                precio1=precio1+lista.get(i).getPrecioUnitario();
-               total1="Unidad:"+"\n"+"Cantidad de productos:"+cantidad1+"\n"+"Precio Total"+precio1+"\n"+"----------------------------";
-            } else if(lista.get(i).getMedida().equalsIgnoreCase("Kilos")){
-                cantidad2=cantidad2+lista.get(i).getCantidad();
-                precio2=precio2+lista.get(i).getPrecioUnitario();
-                total2="Kilos:"+"\n"+"Cantidad de productos:"+cantidad2+"\n"+"Precio Total"+precio2+"\n"+"----------------------------";
-            } else if(lista.get(i).getMedida().equalsIgnoreCase("Litros")){
-                cantidad3=cantidad3+lista.get(i).getCantidad();
-                precio3=precio3+lista.get(i).getPrecioUnitario();
-                total3="Kilos:"+"\n"+"Cantidad de productos:"+cantidad3+"\n"+"Precio Total"+precio3+"\n"+"----------------------------";
+        String importe3="";
+        String importe2="";
+        String importe1="";
+        for(Productos miProducto: lista){
+            
+            if(miProducto.getMedida().equalsIgnoreCase("Unidad")){
+                importeU = importeU + (miProducto.getPrecioUnitario() + miProducto.getCantidad()) ;
+                unidades++;
+            }else if(miProducto.getMedida().equalsIgnoreCase("Kilos")){
+                importeK = importeK + (miProducto.getPrecioUnitario() * miProducto.getCantidad());
+                kilos++;
+            }else if(miProducto.getMedida().equalsIgnoreCase("Litros")){
+                importeL = importeL + (miProducto.getPrecioUnitario() * miProducto.getCantidad());
+                litros++;
             }
+            
         }
-        return total1 + total2 + total3;
-    }
+        
+         importe1 = "Tienes: " + unidades +"\n"+ " Producto/s en unidades que se traducen en " + importeU + " euros.\n";
+         importe2 = "Tienes: " + kilos  +"\n"+" Producto/s en kilos que se traducen en " + importeK + " euros.\n";
+         importe3 = "Tienes: " + litros +"\n"+" Producto/s en litros que se traducen en " + importeL + " euros.\n";
+        
+        return importe1 +"\n"+importe2+"\n"+importe3;
+        
+    };
    
     public void mostrar(){
        

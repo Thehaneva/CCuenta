@@ -12,6 +12,7 @@ package es.iesalb.dam2.di.jasc.tema1.proyecto;
 public class AlmacenResumenWindow extends java.awt.Dialog {
     
     private final Almacen almacen = new Almacen();
+     
     /**
      * Creates new form AlmacenResumenWindow
      */
@@ -19,7 +20,7 @@ public class AlmacenResumenWindow extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,6 +30,7 @@ public class AlmacenResumenWindow extends java.awt.Dialog {
     private void initComponents() {
 
         jLabelTitulo = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jTextField1 = new javax.swing.JTextField();
 
         setBackground(java.awt.Color.darkGray);
@@ -44,6 +46,14 @@ public class AlmacenResumenWindow extends java.awt.Dialog {
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("Inventario");
         add(jLabelTitulo, java.awt.BorderLayout.NORTH);
+
+        jToggleButton1.setText("Operar");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        add(jToggleButton1, java.awt.BorderLayout.SOUTH);
 
         jTextField1.setEditable(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -66,14 +76,19 @@ public class AlmacenResumenWindow extends java.awt.Dialog {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-       jTextField1.setText(almacen.obtenerImportes());
     }//GEN-LAST:event_jTextField1ActionPerformed
-    /**
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText(almacen.obtenerImportes());
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 AlmacenResumenWindow dialog = new AlmacenResumenWindow(new java.awt.Frame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -83,9 +98,11 @@ public class AlmacenResumenWindow extends java.awt.Dialog {
                 dialog.setVisible(true);
             }
         });
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

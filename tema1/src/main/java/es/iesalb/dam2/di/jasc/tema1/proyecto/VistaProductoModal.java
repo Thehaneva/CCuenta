@@ -5,6 +5,10 @@
  */
 package es.iesalb.dam2.di.jasc.tema1.proyecto;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author Jose Antonio
@@ -14,6 +18,7 @@ public class VistaProductoModal extends java.awt.Dialog {
         /**Producto que estamos visualizando */
       private final Productos producto;
       private boolean isAceptado = false ;
+      private JComboBox combo;
     /**
      * Creates new form VistaProducto1
      */
@@ -23,6 +28,10 @@ public class VistaProductoModal extends java.awt.Dialog {
         
         //como no recibo contacto como argumento, creo uno vacio
         producto = new Productos();
+        combo = new JComboBox();
+        combo.addItem("Unidad");
+        combo.addItem("Litros");
+        combo.addItem("Kilos");
     }
     
     public VistaProductoModal(java.awt.Frame parent, boolean modal,Productos producto){
@@ -184,12 +193,13 @@ public class VistaProductoModal extends java.awt.Dialog {
                 .addGroup(panelFormalarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(panelFormalarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelFormalarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelFormalarioLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(27, 27, 27)
                         .addComponent(labelCantidad))
-                    .addComponent(comboCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelFormalarioLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(comboCantidad)))
                 .addGap(42, 42, 42))
         );
 
@@ -220,7 +230,7 @@ public class VistaProductoModal extends java.awt.Dialog {
         producto.setDescripcion(textDescripcion.getText());
         producto.setPrecioUnitario(Double.parseDouble(textPrecio.getText()));
         producto.setCantidad(Double.parseDouble(textCantidad.getText()));
-        producto.setMedida(comboCantidad.getItemAt(WIDTH));
+        producto.setMedida(comboCantidad.getSelectedItem().toString());
         //Se oculta el formulario y lo libero
         setVisible(false);
         dispose();
@@ -230,15 +240,15 @@ public class VistaProductoModal extends java.awt.Dialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_textDescripcionActionPerformed
 
-    private void comboCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCantidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboCantidadActionPerformed
-
     private void buttonCancerlarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancerlarActionPerformed
         // TODO add your handling code here:
         setVisible(false);
         dispose();
     }//GEN-LAST:event_buttonCancerlarActionPerformed
+
+    private void comboCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboCantidadActionPerformed
 
     /**
      * @param args the command line arguments
