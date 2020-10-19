@@ -10,27 +10,31 @@ package es.iesalb.dam2.di.jasc.tema1.proyecto;
  * @author Jose Antonio
  */
 public class Productos {
-    private enum medida{Unidadades,Kilos,Litros}
     
-    private long codigo;
+    private String codigo;
     private String nombre;
     private String descripcion;
     private double precioUnitario;
-    private medida cantidad;
+    private double cantidad;
+    private String medida;
 
-    public Productos(long codigo, String nombre, String descripcion, double precioUnitario, medida cantidad) {
+    public Productos() {
+    }
+    
+    public Productos(String codigo, String nombre, String descripcion, double precioUnitario, double cantidad ,String medida) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioUnitario = precioUnitario;
         this.cantidad = cantidad;
+        this.medida = medida;
     }
 
-    public long getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -58,17 +62,26 @@ public class Productos {
         this.precioUnitario = precioUnitario;
     }
 
-    public medida getCantidad() {
+    public double getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(medida cantidad) {
+    public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
+    }
+
+    
+    public String getMedida() {
+        return medida;
+    }
+
+    public void setMedida(String medida) {
+        this.medida = medida;
     }
 
     @Override
     public String toString() {
-        return "Productos{" + "codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioUnitario=" + precioUnitario + ", cantidad=" + cantidad + '}';
+        return "Productos{" + "codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioUnitario=" + precioUnitario + ", Cantidad"+cantidad+", medida=" + medida + '}';
     }
     
     

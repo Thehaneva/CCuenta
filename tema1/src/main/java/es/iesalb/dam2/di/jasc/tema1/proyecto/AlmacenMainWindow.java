@@ -5,17 +5,86 @@
  */
 package es.iesalb.dam2.di.jasc.tema1.proyecto;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
+
 /**
  *
  * @author Jose Antonio
  */
 public class AlmacenMainWindow extends javax.swing.JFrame {
 
+    private final Almacen almacen;
+    private final int COLUMNAS_NUMERO=6;
+    private final String[] COLUMNAS_NOMBRES ={"Codigo","Nombre","Descripcion","Precio","Cantidad","Medida"};
+    private final int COLUMNA_CODIGO=0;
+    private final int COLUMNA_NOMBRE=1;
+    private final int COLUMNA_DESCRIPCION=2;
+    private final int COLUMNA_PRECIO=3;
+    private final int COLUMNA_CANTIDAD=4;
+    private final int COLUMNA_MEDIDA=5;
+    
     /**
-     * Creates new form AlmacenMainWindow
+     * Crea una nueva ventana asignando el almacen que se va a gestionar
+
      */
-    public AlmacenMainWindow() {
+    public AlmacenMainWindow(Almacen almacen) {
+        this.AlmacenTableModel = new AbstractTableModel(){
+            @Override
+            public int getRowCount() {
+                return almacen.isLenght();
+            }
+            
+            @Override
+            public int getColumnCount() {
+                return COLUMNAS_NUMERO;
+            }
+            
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                
+                //Busco el producto a partir de la fila de la tabla
+                Productos producto = almacen.posicion(rowIndex);
+                
+                //Retorno el atributo en funcion de la columna de la tabla
+                Object valor = null;
+                switch(columnIndex){
+                    case COLUMNA_CODIGO:
+                        valor = producto.getCodigo();
+                        break;
+                    case COLUMNA_NOMBRE:
+                        valor = producto.getNombre();
+                        break;
+                    case COLUMNA_DESCRIPCION:
+                        valor = producto.getDescripcion();
+                        break;
+                    case COLUMNA_PRECIO:
+                        valor = producto.getPrecioUnitario();
+                        break;
+                    case COLUMNA_CANTIDAD:
+                        valor = producto.getCantidad();
+                        break;
+                    case COLUMNA_MEDIDA:
+                        valor = producto.getMedida();
+                        break;
+                    default:
+                        throw new AssertionError("Columna no invalida: "+columnIndex);
+                }
+                return valor;
+            }
+            
+            @Override
+            public String getColumnName (int column){
+                return COLUMNAS_NOMBRES[column];
+            }
+            
+        };
         initComponents();
+        this.almacen=almacen;
     }
 
     /**
@@ -28,109 +97,194 @@ public class AlmacenMainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButtonAñadir = new javax.swing.JButton();
+        jButtonModificar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
+        jButtonMostrar = new javax.swing.JButton();
+        jButtonSalir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaProductos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jToolBar1.setRollover(true);
 
-        jButton1.setText("Crear un producto");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
-
-        jButton2.setText("Modificar un producto");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAñadir.setText("Crear un producto");
+        jButtonAñadir.setFocusable(false);
+        jButtonAñadir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonAñadir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonAñadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonAñadirActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton2);
+        jToolBar1.add(jButtonAñadir);
 
-        jButton3.setText("Eliminar un producto");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        jButtonModificar.setText("Modificar un producto");
+        jButtonModificar.setFocusable(false);
+        jButtonModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonModificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonModificar);
 
-        jButton4.setText("Mostrar totales");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
+        jButtonEliminar.setText("Eliminar un producto");
+        jButtonEliminar.setFocusable(false);
+        jButtonEliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonEliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonEliminar);
 
-        jButton5.setText("Salir");
-        jToolBar1.add(jButton5);
+        jButtonMostrar.setText("Mostrar totales");
+        jButtonMostrar.setFocusable(false);
+        jButtonMostrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonMostrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMostrarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonMostrar);
+
+        jButtonSalir.setText("Salir");
+        jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonSalir);
+
+        tablaProductos.setModel(AlmacenTableModel);
+        jScrollPane1.setViewportView(tablaProductos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    
+    private final AbstractTableModel AlmacenTableModel;
+    
+    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        int index = tablaProductos.getSelectedRow();
+        // Si index es -1 indica que no hay ninguna fila seleccionada
+        if(index >= 0) {
+            
+            //obtengo el contacto desde la agenda
+            Productos p = almacen.posicion(index);
+            
+            VistaProductoModal vista = new VistaProductoModal(this, true, p);
+            vista.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    
+                    //obtener Producto
+                    Productos p = vista.getProducto();
+                    
+                    //Si el contacto no es null es que se ha modificado
+                    if(p != null){
+                        AlmacenTableModel.fireTableRowsInserted(index, index);
+                        // si el contacto no es null
+                    }
+                }
+            });
+            vista.setVisible(true);
+        }
+    }//GEN-LAST:event_jButtonModificarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_jButtonSalirActionPerformed
+
+    private void jButtonAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirActionPerformed
+        // TODO add your handling code here:
+        VistaProductoModal vista = new VistaProductoModal(this, true);
+        vista.addWindowListener(new WindowAdapter(){
+         @Override
+         public void windowClosed(WindowEvent e)  {
+            //Producto añadido
+            Productos p = vista.getProducto();
+          
+          //Si el producto no es null 
+            if(p != null){
+                try {
+                    
+                    almacen.add(p);
+                    // Calcula la fila donde se ha inserdado y notifica a la lista 
+                    int filaInsertada = almacen.isLenght()-1;
+                    AlmacenTableModel.fireTableRowsInserted(filaInsertada, filaInsertada);
+                } catch (Exception ex) {
+                    Logger.getLogger(AlmacenMainWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlmacenMainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlmacenMainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlmacenMainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlmacenMainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+      }
+    });
+   
+        vista.setVisible(true);
+    }//GEN-LAST:event_jButtonAñadirActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AlmacenMainWindow().setVisible(true);
-            }
-        });
-    }
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+        
+        // Toma la fila seleccionada
+        int index = tablaProductos.getSelectedRow();
+        //si no hay nada seleccionado pide confirmacion
+        if(index >=0) {
+            int r = JOptionPane.showConfirmDialog(this, "¿Quieres eliminar el producto del registro", "ATENCION", JOptionPane.YES_NO_OPTION);
+        if( r == JOptionPane.YES_OPTION) {
+                try {
+                    almacen.borrarPorPosicion(index);
+                } catch (Exception ex) {
+                    Logger.getLogger(AlmacenMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                AlmacenTableModel.fireTableRowsDeleted(index, index);
+        }
+        }
+        
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarActionPerformed
+        // TODO add your handling code here:
+    AlmacenResumenWindow vista = new AlmacenResumenWindow(this, true);
+        vista.setVisible(true);
+    }//GEN-LAST:event_jButtonMostrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButtonAñadir;
+    private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonModificar;
+    private javax.swing.JButton jButtonMostrar;
+    private javax.swing.JButton jButtonSalir;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable tablaProductos;
     // End of variables declaration//GEN-END:variables
 }
